@@ -1,0 +1,55 @@
+Subqueries
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Write a query to display all the orders from the orders table issued by the salesman 'Paul Adam'
+	 select * from orders where salesman_id=(select salesman_id from salesman where name='Paul Adam'); 
+
+2. Write a query to display all the orders for the salesman who belongs to the city London.
+ 	select * from orders where salesman_id=(select salesman_id from salesman where city='London'); 
+
+3. Write a query to find all the orders issued against the salesman who may works for customer whose id is 3007. 
+	select * from orders where salesman_id=(select distinct salesman_id from orders where customer_id=3007); 
+
+4. Write a query to display all the orders which values are greater than the average order value for 10th October 2012. 
+	select * from orders where purch_amt>(select avg(purch_amt) from orders where ord_date='2012-10-10'); 
+
+5. Write a query to find all orders attributed to a salesman in New york.
+	select * from orders where salesman_id=(select salesman_id from salesman where city='New York'); 
+
+6. Write a query to display the commission of all the salesmen servicing customers in Paris.
+	select commission from salesman where salesman_id in (select salesman_id from customer where city='Paris'); 
+
+7. Write a query to display all the customers whose id is 2001 bellow the salesman ID of Mc Lyon.
+	select * from customer where customer_id=(select salesman_id-2001 from salesman where name='Mc Lyon');
+
+8. Write a query to count the customers with grades above New York's average. 
+	select grade,count(*) from customer group by grade having grade>(select avg(grade) from customer where city='New York');
+
+9. Write a query to extract the data from the orders table for those salesman who earned the maximum commission
+	select * from orders where salesman_id in (select salesman_id from salesman where commission=(select max(commission) from salesman)); 
+
+10. Write a query to display all the customers with orders issued on date 17th August, 2012.
+	select * from customer where customer_id in (select customer_id from orders where ord_date='2012-08-17'); 
+
+11. Write a query to find the name and numbers of all salesmen who had more than one customer.
+	select name,salesman_id from salesman s where 1<(select count(*) from customer c where s.salesman_id=c.salesman_id);
+
+12. Write a query to find all orders with order amounts which are above-average amounts for their customers.
+	select * from orders a where purch_amt>(select avg(purch_amt) from orders b where a.customer_id=b.customer_id);
+
+13. Write a queries to find all orders with order amounts which are on or above-average amounts for their customers. 
+	 select * from orders a where purch_amt>=(select avg(purch_amt) from orders b where a.customer_id=b.customer_id);
+
+14. Write a query to find the sums of the amounts from the orders table, grouped by date, eliminating all those dates where the sum was not at least 1000.00 above the maximum order amount for that date.
+
+
+
+
+
+
+
+
+
+
+
+
+
